@@ -42,7 +42,7 @@ steps:
     Dockerfile: '**/Dockerfile'
     command: 'buildAndPush'
     containerRegistry: dockerhub
-    repository: rvsivadocker/$(repo)
+    repository: rvsivadocker/$(repo):$(GIT_BRANCH)-$(short_hash)
     tags: '${{ parameters.tag }}'
 
     
