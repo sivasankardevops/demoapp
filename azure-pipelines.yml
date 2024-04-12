@@ -29,4 +29,7 @@ steps:
     Dockerfile: '**/Dockerfile'
     command: 'buildAndPush'
     containerRegistry: dockerhub
-    repository: rvsivadocker/demoapp:$(GIT_BRANCH)-$(Build.BuildId)
+    repository: rvsivadocker/demoapp
+    tags: |
+    $(short_hash)-$(Build.BuildId)
+    
