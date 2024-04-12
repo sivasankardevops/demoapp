@@ -5,11 +5,20 @@
 
 trigger:
 - main
+variables:
+  GIT_COMMIT: $(Build.SourceVersion)
+  GIT_BRANCH: $(Build.SourceBranchName)
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your commands here|
+      short_hash=`git rev-parse --short=7 HEAD`
 - task: Docker@2
   displayName: Login to Docker Hub
   inputs:
@@ -20,4 +29,4 @@ steps:
     Dockerfile: '**/Dockerfile'
     command: 'buildAndPush'
     containerRegistry: dockerhub
-    repository: rvsivadocker/demoapp
+    repository: rvsivadocker/demoapp:$(GIT_BRANCH)-$(short_hash)
