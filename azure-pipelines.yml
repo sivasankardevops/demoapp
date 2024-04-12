@@ -21,7 +21,7 @@ variables:
   GIT_COMMIT: $(Build.SourceVersion)
   GIT_BRANCH: $(Build.SourceBranchName)
   repo : demoapp
-  short_hash: 
+  commit-id: $short_hash
 
 pool:
   vmImage: ubuntu-latest
@@ -44,7 +44,7 @@ steps:
     Dockerfile: '**/Dockerfile'
     command: 'buildAndPush'
     containerRegistry: dockerhub
-    repository: rvsivadocker/$(repo):$(GIT_BRANCH)-$(short_hash)-$(Build.BuildId)
+    repository: rvsivadocker/$(repo):$(GIT_BRANCH)-$(commit-id)-$(Build.BuildId)
     tags: '${{ parameters.tag }}'
 
     
