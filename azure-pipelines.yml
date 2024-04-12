@@ -2,12 +2,25 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+#Is it possible to pass the runtime arguments from build queue rest api to azure-pipelines.yml file?
+
+#Not sure what exactly mean about runtime argument. But I guess what you are looking for is queue build with rest api along with passing dynamic variable to pipeline at same time.
+
+#Sample scenario:
+
+#Here is my azure-pipeline.yml:
+
+parameters:
+- name: tag
+  type: string
+  default: ''
 
 trigger:
 - main
 variables:
   GIT_COMMIT: $(Build.SourceVersion)
   GIT_BRANCH: $(Build.SourceBranchName)
+  repo : demoapp
 
 pool:
   vmImage: ubuntu-latest
@@ -29,7 +42,7 @@ steps:
     Dockerfile: '**/Dockerfile'
     command: 'buildAndPush'
     containerRegistry: dockerhub
-    repository: rvsivadocker/demoapp
-    tags: |
-    $(short_hash)-$(Build.BuildId)
+    repository: rvsivadocker/$(repo)
+    tags: '${{ parameters.tag }}'
+
     
